@@ -20,7 +20,9 @@ int main(){
     return -1;
   }
 
+  // Shift offset so that capital letters start at '0'
   const int char_offset = 65;
+
   int total_priority = 0;
   int ascii_code;
   int offset_code;

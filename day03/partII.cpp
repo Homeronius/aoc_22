@@ -21,15 +21,17 @@ int main(){
     return -1;
   }
 
+  // Shift offset so that capital letters start at '0'
   const int char_offset = 65;
+  // How many elfs are in one group
   const int group_size = 3;
+
   int total_priority = 0;
   int ascii_code;
   int offset_code;
 
   // To keep track of chars that appeared (26+6+26)
   // Extended to 64 due to performance reasons
-  // std::bitset<64> chars_taken;
   std::vector< std::bitset<64> > chars_taken(group_size);
   std::bitset<64> and_result;
 
@@ -64,7 +66,7 @@ int main(){
       chars_taken = std::vector< std::bitset<64> >(group_size);
     }
 
-    member_idx = ( ++member_idx + group_size ) % group_size;
+    member_idx = ( ++member_idx ) % group_size;
   }
 
   std::cout << total_priority << std::endl;
