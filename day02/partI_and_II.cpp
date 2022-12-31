@@ -1,12 +1,12 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <tuple>
 
-enum class Outcome {Loss, Draw, Win};
+enum class Outcome { Loss, Draw, Win };
 
 // Compute outcome depending on the played moves
-Outcome play_round(const int& opponent_move, const int& my_move){
+Outcome play_round(const int &opponent_move, const int &my_move) {
   if ((opponent_move + 1) % 3 == my_move) {
     return Outcome::Win;
   } else if (opponent_move == my_move) {
@@ -17,18 +17,19 @@ Outcome play_round(const int& opponent_move, const int& my_move){
 }
 
 // Compute achieved score according to the game outcome
-int compute_score(const Outcome& state, const int& my_move){
+int compute_score(const Outcome &state, const int &my_move) {
   int score = my_move + 1;
   score += static_cast<int>(state) * 3;
   return score;
 }
 
 // Determine my move according to policy given in Problem I + II
-std::tuple<Outcome, int> move_policy(const int& opponent_move, const int& second_column){
+std::tuple<Outcome, int> move_policy(const int &opponent_move,
+                                     const int &second_column) {
   // Part I
   // int my_move = second_column;
   // Outcome state = play_round(opponent_move, my_move);
-  
+
   // Part II
   int my_move = (opponent_move + second_column - 1 + 3) % 3;
   Outcome state = static_cast<Outcome>(second_column);
@@ -36,13 +37,12 @@ std::tuple<Outcome, int> move_policy(const int& opponent_move, const int& second
   return {state, my_move};
 }
 
-
-int main(){
+int main() {
   std::string filename = "strategy.txt";
 
   std::string strategy_line;
   std::ifstream strategy_file(filename);
-  if ( !strategy_file.is_open() ){
+  if (!strategy_file.is_open()) {
     return -1;
   }
 
@@ -54,8 +54,9 @@ int main(){
   int second_column;
   Outcome state;
 
-  while (std::getline( strategy_file, strategy_line)){
-    if (strategy_line.empty()) continue;
+  while (std::getline(strategy_file, strategy_line)) {
+    if (strategy_line.empty())
+      continue;
 
     opponent_move = static_cast<int>(strategy_line[0]) - char_offset;
     second_column = static_cast<int>(strategy_line[2] - 23) - char_offset;

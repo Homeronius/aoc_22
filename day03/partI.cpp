@@ -1,22 +1,22 @@
-#include <iostream>
-#include <fstream>
 #include <bitset>
+#include <fstream>
+#include <iostream>
 
 // Compute correct priority according problem statement given offset ascii code
-int compute_priority(const int& common_idx){
-  if (common_idx > 31){ // lowercase letter
+int compute_priority(const int &common_idx) {
+  if (common_idx > 31) { // lowercase letter
     return common_idx - 32 + 1;
   } else { // uppercase letter
     return common_idx + 26 + 1;
   }
 }
 
-int main(){
+int main() {
   std::string filename = "rucksacks.txt";
 
   std::string rucksack_line;
   std::ifstream rucksack_file(filename);
-  if ( !rucksack_file.is_open() ){
+  if (!rucksack_file.is_open()) {
     return -1;
   }
 
@@ -30,16 +30,16 @@ int main(){
   // Extended to 64 due to performance reasons
   std::bitset<64> chars_taken;
 
-  while (std::getline( rucksack_file, rucksack_line )){
+  while (std::getline(rucksack_file, rucksack_line)) {
 
-    for(int item_idx = 0; item_idx < rucksack_line.size(); item_idx++){
+    for (int item_idx = 0; item_idx < rucksack_line.size(); item_idx++) {
 
       ascii_code = static_cast<int>(rucksack_line[item_idx]);
       offset_code = ascii_code - char_offset;
-      bool is_first_compartment = item_idx < (rucksack_line.size()/2);
+      bool is_first_compartment = item_idx < (rucksack_line.size() / 2);
       bool char_occurred = chars_taken.test(offset_code);
 
-      if (is_first_compartment && !char_occurred){
+      if (is_first_compartment && !char_occurred) {
         chars_taken.set(offset_code);
       } else if (!is_first_compartment && char_occurred) {
         // Compute correct priority according problem statement
@@ -53,7 +53,6 @@ int main(){
   }
 
   std::cout << total_priority << std::endl;
-
 
   return 0;
 }
